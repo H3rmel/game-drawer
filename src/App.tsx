@@ -46,6 +46,9 @@ export function App() {
           </Card.Actions>
         </Card.Body>
       </Card.Root>
+      <a href="http://github.com/h3rmel/game-drawer" target="_blank" rel="noopener noreferrer" className="absolute bottom-4 text-xl underline">
+        Adiciona uns game ai corno
+      </a>
     </main>
   );
 }
