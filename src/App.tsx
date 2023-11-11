@@ -1,32 +1,51 @@
+// #region Imports
+
 import { useState } from "react";
 
+import { Card } from "@/components/Card";
+
+import { returnGame } from "@/utils/drawGame";
+
 import { games } from "@/constants/games.json";
+
+// #endregion
 
 export function App() {
   const [selectedGame, setSelectedGame] =
     useState<string>("Seleciona ai cuzão");
+  const [loading, setLoading] = useState<boolean>(false);
 
   function drawGame() {
-    const gamesLength: number = games.length;
+    setLoading(true);
 
-    const randomGame = Math.floor(Math.random() * gamesLength);
-
-    setSelectedGame(games[randomGame]);
+    const interval = setInterval(() => {
+      setSelectedGame(games[returnGame()]);
+      setLoading(false);
+      clearInterval(interval);
+    }, 1000);
   }
 
   return (
     <main className="w-full min-h-screen flex flex-col justify-center items-center bg-base-300">
-      <div className="card w-96 bg-base-100 shadow-xl">
-        <div className="card-body">
-          <h2 className="card-title">{selectedGame}</h2>
-          <p>Melhor de 3 no máximo em, sem roubar!</p>
-          <div className="card-actions justify-end">
+      <Card.Root>
+        <Card.Body>
+          <Card.Title>
+            {loading ? (
+              <span className="loading loading-infinity loading-md"></span>
+            ) : (
+              selectedGame
+            )}
+          </Card.Title>
+          <p>
+            Melhor de 3 no máximo! <strong>Sem roubar cuzão!</strong>
+          </p>
+          <Card.Actions>
             <button className="btn btn-primary" onClick={drawGame}>
               Sortear jogo
             </button>
-          </div>
-        </div>
-      </div>
+          </Card.Actions>
+        </Card.Body>
+      </Card.Root>
     </main>
   );
 }
